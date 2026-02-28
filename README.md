@@ -4,7 +4,7 @@ A modern, client-side invoice generator built with React and TypeScript.
 
 Fill in your details, customize line items, and print or export a clean PDF invoice.
 
-![Invoice Generator Screenshot](docs/showcase1.png)
+![Invoice Generator Screenshot](public/showcase1.png)
 
 ---
 

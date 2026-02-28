@@ -48,9 +48,12 @@ function InvoiceApp() {
   return (
     <div className="min-h-screen w-full bg-[#f5f5f5] py-6 px-4 md:px-6 print:bg-white print:py-0 print:px-0">
       <div className="mx-auto w-full max-w-4xl rounded-xl bg-white shadow-sm px-4 py-6 md:p-8 print:shadow-none print:rounded-none print:max-w-none print:my-0 print:mx-0 print:p-0 print-invoice-app-content">
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold md:text-2xl">{t("app.invoiceTitle")}{invoice.details.invoiceNumber || "1"}</h1>
-          <p className="text-base text-muted-foreground mt-1">{t("app.generateInvoice")}</p>
+        <header className="mb-6 flex items-center gap-3">
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" className="h-10 w-10 shrink-0" aria-hidden />
+          <div>
+            <h1 className="text-2xl font-bold md:text-2xl">{t("app.invoiceTitle")}{invoice.details.invoiceNumber || "1"}</h1>
+            <p className="text-base text-muted-foreground mt-1">{t("app.generateInvoice")}</p>
+          </div>
         </header>
         <Actions onGeneratePdf={handlePrint} />
         <InvoiceInfo />
