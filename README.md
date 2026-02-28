@@ -77,3 +77,5 @@ The output will be in the `dist/` folder.
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
+
+### Inspired by [invoify](https://github.com/al1abb/invoify)
