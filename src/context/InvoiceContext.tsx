@@ -12,6 +12,13 @@ import { getInvoiceWithComputedTotals } from "@/lib/calculations";
 import { parseInvoiceFromObject } from "@/lib/parseInvoiceJson";
 import i18n from "@/i18n";
 
+interface SaveResult {
+  success: boolean;
+  fileName?: string;
+  cancelled?: boolean;
+  error?: string;
+}
+
 interface InvoiceContextType {
   invoice: Invoice;
   setInvoice: (invoice: Invoice) => void;
@@ -22,6 +29,7 @@ interface InvoiceContextType {
   setItems: (items: Invoice["details"]["items"]) => void;
   resetInvoice: () => void;
   getInvoiceJson: () => string;
+  saveInvoiceJson: () => Promise<SaveResult>;
   loadFromJson: (json: string) => { success: boolean; error?: string };
 }
 
@@ -93,6 +101,35 @@ export function InvoiceProvider({ children }: { children: ReactNode }) {
     return JSON.stringify(withTotals, null, 2);
   }, [invoice]);
 
+  const saveInvoiceJson = useCallback(async (): Promise<SaveResult> => {
+    const json = getInvoiceJson();
+    try {
+      const handle = await (window as Window & typeof globalThis & { showSaveFilePicker?: (opts?: object) => Promise<FileSystemFileHandle> }).showSaveFilePicker?.({
+        suggestedName: "invoice.json",
+        types: [{ description: "JSON File", accept: { "application/json": [".json"] } }],
+      });
+      if (!handle) {
+        // Browser doesn't support showSaveFilePicker – fall back to download
+        const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "invoice.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        return { success: true, fileName: "invoice.json" };
+      }
+      const writable = await handle.createWritable();
+      await writable.write(json);
+      await writable.close();
+      return { success: true, fileName: handle.name };
+    } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") {
+        return { success: false, cancelled: true };
+      }
+      return { success: false, error: e instanceof Error ? e.message : String(e) };
+    }
+  }, [getInvoiceJson]);
+
   const loadFromJson = useCallback(
     (json: string): { success: boolean; error?: string } => {
       try {
@@ -127,6 +164,7 @@ export function InvoiceProvider({ children }: { children: ReactNode }) {
       setItems,
       resetInvoice,
       getInvoiceJson,
+      saveInvoiceJson,
       loadFromJson,
     }),
     [
@@ -139,6 +177,7 @@ export function InvoiceProvider({ children }: { children: ReactNode }) {
       setItems,
       resetInvoice,
       getInvoiceJson,
+      saveInvoiceJson,
       loadFromJson,
     ]
   );

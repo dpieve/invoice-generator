@@ -18,7 +18,9 @@
     "ok": "OK",
     "language": "Language",
     "languageEn": "English",
-    "languagePtBR": "Português (Brasil)"
+    "languagePtBR": "Português (Brasil)",
+    "savedSuccessfully": "File saved as {{fileName}}",
+    "saveFailed": "Failed to save file"
   },
   "invoiceInfo": {
     "page1": "1. From & To",
