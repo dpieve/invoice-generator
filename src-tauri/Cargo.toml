@@ -1,10 +1,10 @@
 [package]
-name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+name = "invoice-generator"
+version = "1.0.0"
+description = "A modern, client-side invoice generator built with React and Tauri"
+authors = ["dpieve"]
+license = "MIT"
+repository = "https://github.com/dpieve/invoice-generator"
 edition = "2021"
 rust-version = "1.77.2"
 

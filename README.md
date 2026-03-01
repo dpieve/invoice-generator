@@ -8,6 +8,14 @@ Fill in your details, customize line items, and print or export a clean PDF invo
 
 ---
 
+## Download
+
+Desktop apps for Windows, macOS, and Linux are available on the [Releases](https://github.com/dpieve/invoice-generator/releases) page.
+
+Web version can be found [here](https://dpieve.github.io/invoice-generator/).
+
+---
+
 ## Features
 
 - **Sender & Receiver** — Enter full contact details for both parties, including custom fields
@@ -38,6 +46,7 @@ Fill in your details, customize line items, and print or export a clean PDF invo
 | [@dnd-kit](https://dndkit.com) | Drag-and-drop line item sorting |
 | [react-to-print](https://github.com/MatthewHerbst/react-to-print) | Print / PDF export |
 | [number-to-words](https://github.com/nicolo-ribaudo/number-to-words) | Amount in words |
+| [Tauri](https://tauri.app) | Desktop app framework |
 
 ---
 
