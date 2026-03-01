@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import {
   Card,
   CardContent,
@@ -49,7 +50,7 @@ export default function Actions({ onGeneratePdf }: ActionsProps) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const {
     resetInvoice,
-    getInvoiceJson,
+    saveInvoiceJson,
     loadFromJson,
     invoice,
     updateDetails,
@@ -74,14 +75,14 @@ export default function Actions({ onGeneratePdf }: ActionsProps) {
     }
   };
 
-  const handleSave = () => {
-    const json = getInvoiceJson();
-    const url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "invoice.json";
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleSave = async () => {
+    const result = await saveInvoiceJson();
+    if (result.cancelled) return;
+    if (result.success && result.fileName) {
+      toast.success(t("actions.savedSuccessfully", { fileName: result.fileName }));
+    } else if (!result.success) {
+      toast.error(t("actions.saveFailed"));
+    }
   };
 
   const handleSetDatesToToday = () => {

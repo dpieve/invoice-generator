@@ -5,6 +5,7 @@ import Actions from "./features/Actions";
 import InvoiceInfo from "./features/InvoiceInfo";
 import InvoicePreview from "./features/InvoicePreview";
 import { InvoiceProvider, useInvoice } from "./context/InvoiceContext";
+import { Toaster } from "@/components/ui/sonner";
 
 const PRINT_PAGE_STYLE = `
   @page { size: A4; margin: 0; }
@@ -67,6 +68,7 @@ function App() {
   return (
     <InvoiceProvider>
       <InvoiceApp />
+      <Toaster position="bottom-right" />
     </InvoiceProvider>
   );
 }
